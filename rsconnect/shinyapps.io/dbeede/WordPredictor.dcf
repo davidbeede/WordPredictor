@@ -1,0 +1,11 @@
+name: WordPredictor
+title: WordPredictor
+account: dbeede
+server: shinyapps.io
+appId: 167423
+bundleId: 765728
+url: https://dbeede.shinyapps.io/WordPredictor/
+when: 1490646133.19543
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: serverworking.R|tester.R|uiworking.R
