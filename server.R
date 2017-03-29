@@ -3,9 +3,9 @@ library(utils)
 library(data.table)
 library(devtools)
 library(Rcpp)
-library(cmscu, lib.loc = "C:/Users/David/Documents/R/win-library/3.3")
+library(cmscu)
 
-setwd("~/JHU_DataScience/CapstoneProject/Coursera-SwiftKey/final/en_US")
+#setwd("~/JHU_DataScience/CapstoneProject/WordPredictor/WordPredictor")
 DictGrams1 <- new(FrequencyDictionary, 4, 2^22)
 DictGrams2 <- new(FrequencyDictionary, 4, 2^22)
 DictGrams3 <- new(FrequencyDictionary, 4, 2^22)
@@ -20,19 +20,19 @@ DictN31 <- new(FrequencyDictionary, 4, 2^21)
 DictN32 <- new(FrequencyDictionary, 4, 2^18)
 DictN33 <- new(FrequencyDictionary, 4, 2^18)
 
-DictGrams1$read("grams1.bin")
-DictGrams2$read("grams2.bin")
-DictGrams3$read("grams3.bin")
-tripref$read("tripref.bin")
-tricomp$read("tricomp.bin")
-trimidd$read("trimidd.bin")
-bipref$read("bipref.bin")
-DictN21$read("DictN21.bin")
-DictN22$read("DictN22.bin")
-DictN23$read("DictN23.bin")
-DictN31$read("DictN31.bin")
-DictN32$read("DictN32.bin")
-DictN33$read("DictN33.bin")
+DictGrams1$read("data/grams1.bin")
+DictGrams2$read("data/grams2.bin")
+DictGrams3$read("data/grams3.bin")
+tripref$read("data/tripref.bin")
+tricomp$read("data/tricomp.bin")
+trimidd$read("data/trimidd.bin")
+bipref$read("data/bipref.bin")
+DictN21$read("data/DictN21.bin")
+DictN22$read("data/DictN22.bin")
+DictN23$read("data/DictN23.bin")
+DictN31$read("data/DictN31.bin")
+DictN32$read("data/DictN32.bin")
+DictN33$read("data/DictN33.bin")
 
 #count vocabulary
 V1 <- DictGrams1$unique_entries #number of unique unigrams
@@ -150,7 +150,7 @@ KN_tri_all <- function(phrase){
 #of training set to test if KN function is working correctly
 #and find the wordwith the highest probability
 
-counts1 <- readRDS("medium_rev_counts1.rds")
+counts1 <- readRDS("data/medium_rev_counts1.rds")
 counts1 <- select(counts1, word1)
 counts1 <- filter(counts1, word1 != "BOS" & word1 != "EOS")
 lengcount <- dim(counts1)[1]
@@ -175,6 +175,7 @@ maxprob <- function(x){
    if (x == "") {
       return("")
    } else {
+   x <- iconv(x, from = "UTF-8", to = "ASCII", sub = "")   
    x <- cleanup(x)
    lasttwo <- tail(strsplit(x, split=" ")[[1]],2)
    lasttwo <- paste(lasttwo[1], lasttwo[2], sep = " ")
